@@ -1,0 +1,35 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
+/*
+  Recordar instalar el paquete de:
+    shared_preferences:
+
+  Inicializar en el main
+    final prefs = new PreferenciasUsuario();
+    prefs.initPrefs();
+
+*/
+
+class PreferenciasUsuario {
+  static final PreferenciasUsuario _instancia = new PreferenciasUsuario._internal();
+
+  factory PreferenciasUsuario() {
+    return _instancia;
+  }
+
+  PreferenciasUsuario._internal();
+
+  SharedPreferences _prefs;
+
+  initPrefs() async {
+    this._prefs = await SharedPreferences.getInstance();
+  }
+
+  get token async {
+    return _prefs.getString('token') ?? '';
+  }
+
+  set token(String value) {
+    _prefs.setString('token', value);
+  }
+}
